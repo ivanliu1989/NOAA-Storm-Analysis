@@ -1,0 +1,24 @@
+Astronomical Low Tide
+Avalanche
+Blizzard
+Coastal Flood
+Cold/Wind Chill
+Debris Flow
+Dense Fog
+Dense Smoke
+Drought
+Dust Devil
+Dust Storm
+Excessive Heat
+Extreme Cold/Wind Chill
+Flash Flood C
+Flood C
+Frost/Freeze Z
+Funnel Cloud C
+Freezing Fog Z
+Hail C
+Heat Z
+Heavy Rain C
+Heavy Snow Z
+High Surf Z
+High Wind Z

@@ -2,12 +2,14 @@
 ## Across the United States, which types of events have the greatest economic consequences?
 
 ## Download datasets and load into R
-    setwd("C:/Documents and Settings/Macro/Desktop/Ivandata/NOAA-Storm-Analysis")
+    setwd(choose.dir())
     data.url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
     data.csv <- "repdata-data-StormData.csv"
     if(!(file.exists(data.csv)))
         download.file(data.url, destfile="repdata-data-StormData.csv")
-    noaa.data <- read.csv(data.csv,head=T)
+    library(data.table)
+    dir()
+    system.time(noaa.data <- read.csv(data.csv,head=T))
     
 ## Dataset exploration     
     str(noaa.data)
@@ -18,4 +20,10 @@
     index.col <- c(1:2,7:8,21:28)
     noaa.sub <- subset(noaa.data, select=index.col)
     str(noaa.sub)
+
+## Clean the inconsistencies in EVTYPE column
+    event.types <- c("Astronomical Low Tide","Avalanche",)
+    noaa.sub$evtype <- as.factor(tolower(noaa.sub$evtype))
+    a <- grepl("blizzard",noaa.sub$evtype)
+    table(a)
     
