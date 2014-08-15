@@ -81,12 +81,12 @@
                       fatalities=sum(fatalities),injuries=sum(injuries),healthdmg=sum(healthdmg),
                       ecodmg=sum(ecodmg))
     ## Sort and subset datasets for different analysis
+    noaa.health <- noaa.agg[,-c(2,3,7)]
+    noaa.eco <- noaa.agg[,-c(4,5,6)]
+    noaa.health <- head(arrange(noaa.health,desc(healthdmg)),n=10)
+    noaa.eco <- head(arrange(noaa.eco,desc(ecodmg)),n=10)
+    
+    ## Plots
     
     
-    
-    
-    
-    
-    
-    #check <- matrix(c("cold","Extreme Cold/Wind Chill","tide","Astronomical Low Tide","chill","Cold/Wind Chill","freez","Frost/Freeze",),ncol=2)
-    
+
