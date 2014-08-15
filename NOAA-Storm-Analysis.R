@@ -54,11 +54,17 @@
         index <- grepl(pattern=event.types[i],x=noaa.sub$evtype2, fixed=F)
         noaa.sub$eventtype[index] <- event.types[i]
     }
+    ## First aggregate to make datasets smaller for the efficiency of following cleansing steps
+    noaa.sub$eventtype[is.na(noaa.sub$eventtype)] <- noaa.sub$evtype2[is.na(noaa.sub$eventtype)]
+    library(plyr)
+    noaa.agg <- ddply(noaa.sub, .(eventtype), summarize, propdmg=sum(propdmg),cropdmg=sum(cropdmg),
+                      fatalities=sum(fatalities),injuries=sum(injuries),healthdmg=sum(healthdmg),
+                      ecodmg=sum(ecodmg))
     ## Matching event types based on enventtype
     for (i in 1:length(unique(noaa.sub$eventtype))){
-        for (j in 1:length(noaa.sub$evtype2)){
-            if(grepl(noaa.sub$evtype2[j],unique(noaa.sub$eventtype)[i]))
-                noaa.sub$eventtype[j] <- unique(noaa.sub$eventtype)[i]
+        for (j in 1:length(noaa.agg$eventtype)){
+            if(grepl(noaa.agg$eventtype[j],unique(noaa.sub$eventtype)[i]))
+                noaa.agg$eventtype[j] <- unique(noaa.sub$eventtype)[i]
         }
     }
     
