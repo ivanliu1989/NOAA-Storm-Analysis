@@ -60,11 +60,12 @@
     noaa.agg <- ddply(noaa.sub, .(eventtype), summarize, propdmg=sum(propdmg),cropdmg=sum(cropdmg),
                       fatalities=sum(fatalities),injuries=sum(injuries),healthdmg=sum(healthdmg),
                       ecodmg=sum(ecodmg))
+    noaa.agg$rawtype[,which(noaa.agg$eventtype %in% event.types)] <- noaa.agg$eventtype[,which(noaa.agg$eventtype %in% event.types)]
     ## Matching event types based on enventtype
     for (i in 1:length(unique(event.types))){
         for (j in 1:length(noaa.agg$eventtype)){
             if(grepl(noaa.agg$eventtype[j],unique(event.types)[i]))
-                noaa.agg$eventtype[j] <- unique(event.types)[i]
+                noaa.agg$eventtype2[j] <- unique(event.types)[i]
         }
     }
     
