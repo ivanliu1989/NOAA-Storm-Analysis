@@ -39,14 +39,14 @@
     event.types <- as.factor(tolower(event.types))
     noaa.sub$evtype2 <- as.factor(tolower(noaa.sub$evtype)) ## create new column for testing
     spec_char <- c(" ","/","_",",",":","&","-")
-    a <- rep("",length(spec_char))
-    event.types.sub <- mapply(gsub,spec_char,a,as.character(event.types))
+    # a <- rep("",length(spec_char))
+    # event.types.sub <- mapply(gsub,spec_char,a,as.character(event.types))
     # library(qdap)
     # event.types.sub <- mgsub(spec_char,a,as.character(event.types))
        
     for (i in 1:length(spec_char)){
         print(spec_char[i])
-        event.types <- gsub(spec_char[i]," ",as.character(event.types))
+        event.types <- gsub(spec_char[i],"",as.character(event.types))
         noaa.sub$evtype2 <- gsub(spec_char[i],"",as.character(noaa.sub$evtype2))
     }
     ## Matching event types based on event.types
