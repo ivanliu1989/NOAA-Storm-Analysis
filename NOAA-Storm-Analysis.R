@@ -1,5 +1,5 @@
-## Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
-## Across the United States, which types of events have the greatest economic consequences?
+## Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health (fatalities + injuries)?
+## Across the United States, which types of events have the greatest economic consequences (cropdmg + propdmg)?
 
 ## Download datasets and load into R
     setwd(choose.dir())
@@ -17,10 +17,23 @@
     colnames(noaa.data)<-tolower(colnames(noaa.data))
 
 ## Subset dataset according to analysis requirement
+    # first step subsetting
     index.col <- c(1:2,7:8,21:28)
     noaa.sub <- subset(noaa.data, select=index.col)
-    str(noaa.sub)
-
+    # calculate economic damage and health damage
+    noaa.sub$healthdmg <- noaa.sub$fatalities + noaa.sub$injuries
+    noaa.sub$cropmul[tolower(noaa.sub$cropdmgexp)=="k"]<-1000
+    noaa.sub$cropmul[tolower(noaa.sub$cropdmgexp)=="m"]<-1000000
+    noaa.sub$cropmul[is.na(noaa.sub$cropmul)] <- 1
+    noaa.sub$propmul[tolower(noaa.sub$propdmgexp)=="k"]<-1000
+    noaa.sub$propmul[tolower(noaa.sub$propdmgexp)=="m"]<-1000000
+    noaa.sub$propmul[is.na(noaa.sub$propmul)] <- 1
+    noaa.sub$cropdmg <- noaa.sub$cropdmg * noaa.sub$cropmul
+    noaa.sub$propdmg <- noaa.sub$propdmg * noaa.sub$propmul
+    noaa.sub$ecodmg <- noaa.sub$cropdmg + noaa.sub$propdmg
+    # second step subsetting
+    noaa.sub <- noaa.sub[,-c(1:3,5,6,10,12,14,15)]
+    
 ## Clean the inconsistencies in EVTYPE column
     event.types <- readLines("evtype.txt")
     event.types <- as.factor(tolower(event.types))
