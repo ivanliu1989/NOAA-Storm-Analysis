@@ -63,15 +63,24 @@
     noaa.agg$sum <- noaa.agg[,6]+noaa.agg[,7]
     noaa.agg <- noaa.agg[!(noaa.agg$sum==0),]
     noaa.agg <- noaa.agg[,-8]
-    ## Matching event types based on enventtype
-    
-    for (i in 1:length(unique(event.types))){
+    ## Mannual data cleansing
+    adj <- matrix(c("tstm","thunderstormwind","thunder","thunderstormwind",
+                    "thuder","thunderstormwind","avalan","avalanche",
+                    "astronomical","astronomicallowtide","fog","freezingfog",
+                    "hurricane","hurricane(typhoon)","cold","coldwindchill",
+                    "torndao","tornado","thunerstormwinds","thunderstormwind",
+                    "thundeerstormwinds","thunderstormwind",
+                    "freeze","frost/freeze"), ncol=2,byrow = T)
+    for (i in 1:length(adj[,1])){
         for (j in 1:length(noaa.agg$eventtype)){
-            if(grepl(noaa.agg$eventtype[j],unique(event.types)[i],fixed=T))
-                noaa.agg$eventtype2[j] <- unique(event.types)[i]
+            if(grepl(adj[i,1],noaa.agg$eventtype[j],fixed=F))
+                noaa.agg$eventtype[j] <- adj[i,2]
         }
     }
-    
+    noaa.agg <- ddply(noaa.agg, .(eventtype), summarize, propdmg=sum(propdmg),cropdmg=sum(cropdmg),
+                      fatalities=sum(fatalities),injuries=sum(injuries),healthdmg=sum(healthdmg),
+                      ecodmg=sum(ecodmg))
+    ## Sort and subset datasets for different analysis
     
     
     
