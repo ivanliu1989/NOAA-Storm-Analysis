@@ -28,8 +28,8 @@
     spec_char <- c(" ","/","_",",",":","&","-")
     a <- rep("",length(spec_char))
     event.types.sub <- mapply(gsub,spec_char,a,as.character(event.types))
-    library(qdap)
-    event.types.sub <- mgsub(spec_char,a,as.character(event.types))
+    # library(qdap)
+    # event.types.sub <- mgsub(spec_char,a,as.character(event.types))
     for (i in 1:length(spec_char)){
         print(spec_char[i])
         event.types <- gsub(spec_char[i],"",as.character(event.types))
