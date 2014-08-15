@@ -30,19 +30,31 @@
     event.types.sub <- mapply(gsub,spec_char,a,as.character(event.types))
     # library(qdap)
     # event.types.sub <- mgsub(spec_char,a,as.character(event.types))
+       
     for (i in 1:length(spec_char)){
         print(spec_char[i])
         event.types <- gsub(spec_char[i]," ",as.character(event.types))
         noaa.sub$evtype2 <- gsub(spec_char[i],"",as.character(noaa.sub$evtype2))
     }
+    ## Matching event types based on event.types
     for (i in 1:length(event.types)){
         index <- grepl(pattern=event.types[i],x=noaa.sub$evtype2, fixed=F)
         noaa.sub$eventtype[index] <- event.types[i]
     }
-    for (i in 1:length(unique(noaa.sub$evtype2))){
-        
-        index2 <- grepl(pattern=unique(noaa.sub$evtype2)[i],x=noaa.sub$eventtype, fixed=F)
-        noaa.sub$eventtype[index2] <- noaa.sub$eventtype
+    ## Matching event types based on enventtype
+    for (i in 1:length(unique(noaa.sub$eventtype))){
+        for (j in 1:length(noaa.sub$evtype2)){
+            if(grepl(noaa.sub$evtype2[j],unique(noaa.sub$eventtype)[i]))
+                noaa.sub$eventtype[j] <- unique(noaa.sub$eventtype)[i]
+        }
     }
-    check <- matrix(c("cold","Extreme Cold/Wind Chill","tide","Astronomical Low Tide","chill","Cold/Wind Chill","freez","Frost/Freeze",),ncol=2)
+    
+    
+    
+    
+    
+    
+    
+    
+    #check <- matrix(c("cold","Extreme Cold/Wind Chill","tide","Astronomical Low Tide","chill","Cold/Wind Chill","freez","Frost/Freeze",),ncol=2)
     
