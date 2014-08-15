@@ -42,18 +42,12 @@
     # a <- rep("",length(spec_char))
     # event.types.sub <- mapply(gsub,spec_char,a,as.character(event.types))
     # library(qdap)
-    # event.types.sub <- mgsub(spec_char,a,as.character(event.types))
-       
+    # event.types.sub <- mgsub(spec_char,a,as.character(event.types))  
     for (i in 1:length(spec_char)){
         print(spec_char[i])
         event.types <- gsub(spec_char[i],"",as.character(event.types))
         noaa.sub$evtype2 <- gsub(spec_char[i],"",as.character(noaa.sub$evtype2))
     }
-    
-    #sapply(spec_char,function(){
-    #    event.types <- gsub(spec_char,"",as.character(event.types))
-    #    noaa.sub$evtype2 <- gsub(spec_char,"",as.character(noaa.sub$evtype2)) 
-    #})
     
     ## Matching event types based on event.types
     for (i in 1:length(event.types)){
@@ -67,10 +61,10 @@
                       fatalities=sum(fatalities),injuries=sum(injuries),healthdmg=sum(healthdmg),
                       ecodmg=sum(ecodmg))
     ## Matching event types based on enventtype
-    for (i in 1:length(unique(noaa.sub$eventtype))){
+    for (i in 1:length(unique(event.types))){
         for (j in 1:length(noaa.agg$eventtype)){
-            if(grepl(noaa.agg$eventtype[j],unique(noaa.sub$eventtype)[i]))
-                noaa.agg$eventtype[j] <- unique(noaa.sub$eventtype)[i]
+            if(grepl(noaa.agg$eventtype[j],unique(event.types)[i]))
+                noaa.agg$eventtype[j] <- unique(event.types)[i]
         }
     }
     
