@@ -35,7 +35,10 @@
         event.types <- gsub(spec_char[i],"",as.character(event.types))
         noaa.sub$evtype2 <- gsub(spec_char[i],"",as.character(noaa.sub$evtype2))
     }
-    noaa$eventtype <- sapply(noaa$evtype, typematch <- function(){
-        
-    })
+    
+    for (i in 1:length(event.types)){
+        index <- grepl(pattern=event.types[i],x=noaa.sub$evtype2)
+        noaa.sub$eventtype[index] <- event.types[i]
+    }
+    
     
