@@ -11,14 +11,38 @@ Dust Devil
 Dust Storm
 Excessive Heat
 Extreme Cold/Wind Chill
-Flash Flood C
-Flood C
-Frost/Freeze Z
-Funnel Cloud C
-Freezing Fog Z
-Hail C
-Heat Z
-Heavy Rain C
-Heavy Snow Z
-High Surf Z
-High Wind Z
+Flash Flood
+Flood
+Frost/Freeze
+Funnel Cloud
+Freezing Fog
+Hail
+Heat
+Heavy Rain
+Heavy Snow
+High Surf
+High Wind
+Hurricane (Typhoon)
+Ice Storm
+Lake-Effect Snow
+Lakeshore Flood
+Lightning
+Marine Hail
+Marine High Wind
+Marine Strong Wind
+Marine Thunderstorm Wind
+Rip Current
+Seiche
+Sleet
+Storm Surge/Tide
+Strong Wind
+Thunderstorm Wind
+Tornado
+Tropical Depression
+Tropical Storm
+Tsunami
+Volcanic Ash
+Waterspout
+Wildfire
+Winter Storm
+Winter Weather

@@ -22,8 +22,20 @@
     str(noaa.sub)
 
 ## Clean the inconsistencies in EVTYPE column
-    event.types <- c("Astronomical Low Tide","Avalanche",)
-    noaa.sub$evtype <- as.factor(tolower(noaa.sub$evtype))
-    a <- grepl("blizzard",noaa.sub$evtype)
-    table(a)
+    event.types <- readLines("evtype.txt")
+    event.types <- as.factor(tolower(event.types))
+    noaa.sub$evtype2 <- as.factor(tolower(noaa.sub$evtype)) ## create new column for testing
+    spec_char <- c(" ","/","_",",",":","&","-")
+    a <- rep("",length(spec_char))
+    event.types.sub <- mapply(gsub,spec_char,a,as.character(event.types))
+    library(qdap)
+    event.types.sub <- mgsub(spec_char,a,as.character(event.types))
+    for (i in 1:length(spec_char)){
+        print(spec_char[i])
+        event.types <- gsub(spec_char[i],"",as.character(event.types))
+        noaa.sub$evtype2 <- gsub(spec_char[i],"",as.character(noaa.sub$evtype2))
+    }
+    noaa$eventtype <- sapply(noaa$evtype, typematch <- function(){
+        
+    })
     
