@@ -1,0 +1,53 @@
+## NOAA Storm Database Analysis regarding Economy and Health Damages
+#####Tianxiang(Ivan) Liu
+
+#### Synopsis
+Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
+
+This analysis is mainly to address the questions including: 
+    
+    1. Across the United States, which types of events are most harmful with respect to population health? 
+    
+    2. Across the United States, which types of events have the greatest economic consequences? 
+
+Main steps including data processing, data cleansing, plotting and resulting.
+
+#### Data processing
+1. Download datasets and load into R
+```{r, echo=TRUE}
+setwd(choose.dir())
+data.url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
+data.csv <- "repdata-data-StormData.csv"
+if(!(file.exists(data.csv)))
+    download.file(data.url, destfile="repdata-data-StormData.csv")
+system.time(noaa.data <- read.csv(data.csv,head=T))
+```
+
+2. Dataset exploration - to get a summary re the datasets and allocate the variable names properly
+```{r, echo=TRUE}
+str(noaa.data)
+head(noaa.data,n=3)
+colnames(noaa.data)<-tolower(colnames(noaa.data))
+```
+
+3. Subset dataset based on analysis requirement - remove unnecessary variables in order to make dataset smaller and transfer damage figures to numbers with identical unit
+```{r, echo=TRUE}
+# first step subsetting
+index.col <- c(1:2,7:8,21:28)
+noaa.sub <- subset(noaa.data, select=index.col)
+# calculate economic damage and health damage
+noaa.sub$healthdmg <- noaa.sub$fatalities + noaa.sub$injuries
+noaa.sub$cropmul[tolower(noaa.sub$cropdmgexp)=="k"]<-1000
+noaa.sub$cropmul[tolower(noaa.sub$cropdmgexp)=="m"]<-1000000
+noaa.sub$cropmul[is.na(noaa.sub$cropmul)] <- 1
+noaa.sub$propmul[tolower(noaa.sub$propdmgexp)=="k"]<-1000
+noaa.sub$propmul[tolower(noaa.sub$propdmgexp)=="m"]<-1000000
+noaa.sub$propmul[is.na(noaa.sub$propmul)] <- 1
+noaa.sub$cropdmg <- noaa.sub$cropdmg * noaa.sub$cropmul
+noaa.sub$propdmg <- noaa.sub$propdmg * noaa.sub$propmul
+noaa.sub$ecodmg <- noaa.sub$cropdmg + noaa.sub$propdmg
+# second step subsetting
+noaa.sub <- noaa.sub[,-c(1:3,5,6,10,12,14,15)]
+```
+
+4. Clean the inconsistencies in EVTYPE column - there is a significant percentage of event types are inconsistent such as "Avalanche" and "Avalanch", we need to indentify these errors and clean the data as much as possible.
