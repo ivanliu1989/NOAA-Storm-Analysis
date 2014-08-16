@@ -86,7 +86,23 @@
     noaa.health <- head(arrange(noaa.health,desc(healthdmg)),n=10)
     noaa.eco <- head(arrange(noaa.eco,desc(ecodmg)),n=10)
     
-    ## Plots
+    ## Plots health
+    library(ggplot2)
+    g1 <- ggplot(noaa.health,aes(x=eventtype, y=fatalities))
+    g1 + geom_bar(stat="identity", fill="red",alpha=1, colour="black",) + 
+        labs(x="Health damage") + labs(y="Event types") + 
+        labs(title=paste("Most Harmful Events to Population Health", "(Top 10)", sep="\n"))+
+        theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+        geom_bar(aes(x=eventtype, y=injuries),stat="identity",fill="red",alpha=0.3, colour="black") +
+        geom_bar(aes(x=eventtype, y=healthdmg),stat="identity",fill="red",alpha=0.3, colour="black")
+    
+    ## Plots Economy
+    g2 <- ggplot(noaa.eco,aes(x=eventtype, y=propdmg))
+    g2 + geom_bar(stat="identity", fill="black",alpha=0.5, colour="black",) + 
+        labs(x="Health damage") + labs(y="Event types") + 
+        labs(title=paste("Most Harmful Events to Economy", "(Top 10)", sep="\n"))+
+        theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+        geom_bar(aes(x=eventtype, y=cropdmg),stat="identity",fill="blue",alpha=0.5, colour="black") +
+        geom_bar(aes(x=eventtype, y=ecodmg),stat="identity",fill="blue",alpha=0.5, colour="black")    
     
     
-
