@@ -80,13 +80,13 @@
     noaa.agg <- ddply(noaa.agg, .(eventtype), summarize, propdmg=sum(propdmg),cropdmg=sum(cropdmg),
                       fatalities=sum(fatalities),injuries=sum(injuries),healthdmg=sum(healthdmg),
                       ecodmg=sum(ecodmg))
-    ## Sort and subset datasets for different analysis
+## Sort and subset datasets for different analysis
     noaa.health <- noaa.agg[,-c(2,3,7)]
     noaa.eco <- noaa.agg[,-c(4,5,6)]
     noaa.health <- head(arrange(noaa.health,desc(healthdmg)),n=10)
     noaa.eco <- head(arrange(noaa.eco,desc(ecodmg)),n=10)
     
-    ## Plots health
+## Plots health
     library(ggplot2)
     g1 <- ggplot(noaa.health,aes(x=eventtype, y=fatalities))
     g1 + geom_bar(stat="identity", fill="red",alpha=1, colour="black",) + 
@@ -96,7 +96,7 @@
         geom_bar(aes(x=eventtype, y=injuries),stat="identity",fill="red",alpha=0.3, colour="black") +
         geom_bar(aes(x=eventtype, y=healthdmg),stat="identity",fill="red",alpha=0.3, colour="black")
     
-    ## Plots Economy
+## Plots Economy
     g2 <- ggplot(noaa.eco,aes(x=eventtype, y=propdmg))
     g2 + geom_bar(stat="identity", fill="black",alpha=0.5, colour="black",) + 
         labs(x="Health damage") + labs(y="Event types") + 
