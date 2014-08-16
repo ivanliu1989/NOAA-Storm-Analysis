@@ -219,7 +219,7 @@ system.time(noaa.data &lt;- read.csv(data.csv,head=T))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##  143.83    0.83  146.01
+##  154.83    0.84  156.78
 </code></pre>
 
 <p>Dataset exploration - to get a summary re the datasets and allocate the variable names properly</p>
@@ -270,26 +270,66 @@ system.time(noaa.data &lt;- read.csv(data.csv,head=T))
 <pre><code class="r">head(noaa.data,n=3)
 </code></pre>
 
-<pre><code>##   STATE__          BGN_DATE BGN_TIME TIME_ZONE COUNTY COUNTYNAME STATE
-## 1       1 4/18/1950 0:00:00     0130       CST     97     MOBILE    AL
-## 2       1 4/18/1950 0:00:00     0145       CST      3    BALDWIN    AL
-## 3       1 2/20/1951 0:00:00     1600       CST     57    FAYETTE    AL
-##    EVTYPE BGN_RANGE BGN_AZI BGN_LOCATI END_DATE END_TIME COUNTY_END
-## 1 TORNADO         0                                               0
-## 2 TORNADO         0                                               0
-## 3 TORNADO         0                                               0
-##   COUNTYENDN END_RANGE END_AZI END_LOCATI LENGTH WIDTH F MAG FATALITIES
-## 1         NA         0                      14.0   100 3   0          0
-## 2         NA         0                       2.0   150 2   0          0
-## 3         NA         0                       0.1   123 2   0          0
-##   INJURIES PROPDMG PROPDMGEXP CROPDMG CROPDMGEXP WFO STATEOFFIC ZONENAMES
-## 1       15    25.0          K       0                                    
-## 2        0     2.5          K       0                                    
-## 3        2    25.0          K       0                                    
-##   LATITUDE LONGITUDE LATITUDE_E LONGITUDE_ REMARKS REFNUM
-## 1     3040      8812       3051       8806              1
-## 2     3042      8755          0          0              2
-## 3     3340      8742          0          0              3
+<pre><code>##   STATE__          BGN_DATE
+## 1       1 4/18/1950 0:00:00
+## 2       1 4/18/1950 0:00:00
+## 3       1 2/20/1951 0:00:00
+##   BGN_TIME TIME_ZONE COUNTY
+## 1     0130       CST     97
+## 2     0145       CST      3
+## 3     1600       CST     57
+##   COUNTYNAME STATE  EVTYPE
+## 1     MOBILE    AL TORNADO
+## 2    BALDWIN    AL TORNADO
+## 3    FAYETTE    AL TORNADO
+##   BGN_RANGE BGN_AZI
+## 1         0        
+## 2         0        
+## 3         0        
+##   BGN_LOCATI END_DATE
+## 1                    
+## 2                    
+## 3                    
+##   END_TIME COUNTY_END
+## 1                   0
+## 2                   0
+## 3                   0
+##   COUNTYENDN END_RANGE
+## 1         NA         0
+## 2         NA         0
+## 3         NA         0
+##   END_AZI END_LOCATI LENGTH
+## 1                      14.0
+## 2                       2.0
+## 3                       0.1
+##   WIDTH F MAG FATALITIES
+## 1   100 3   0          0
+## 2   150 2   0          0
+## 3   123 2   0          0
+##   INJURIES PROPDMG PROPDMGEXP
+## 1       15    25.0          K
+## 2        0     2.5          K
+## 3        2    25.0          K
+##   CROPDMG CROPDMGEXP WFO
+## 1       0               
+## 2       0               
+## 3       0               
+##   STATEOFFIC ZONENAMES
+## 1                     
+## 2                     
+## 3                     
+##   LATITUDE LONGITUDE
+## 1     3040      8812
+## 2     3042      8755
+## 3     3340      8742
+##   LATITUDE_E LONGITUDE_
+## 1       3051       8806
+## 2          0          0
+## 3          0          0
+##   REMARKS REFNUM
+## 1              1
+## 2              2
+## 3              3
 </code></pre>
 
 <pre><code class="r">colnames(noaa.data)&lt;-tolower(colnames(noaa.data))
